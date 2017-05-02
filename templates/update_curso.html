@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="w3-content w3-padding-large w3-margin-top">
+      <!-- Contact -->
+  <div class="w3-padding-large w3-padding-32 w3-margin-top" id="contact">
+    <h3 class="w3-center">Alterar informações do curso</h3>
+    <hr>
+    <form action="/update?key={{curso.key.urlsafe()}};page=cursos" method="post">
+        <fieldset>
+            <div class="w3-section">
+            <label>Nome</label>
+            <input class="w3-input w3-border" name="nome" type="text" value="{{curso.nome}}">
+            </div>
+            <div class="w3-section">
+            <label>Quantidade de Períodos</label>
+            <input class="w3-input w3-border" name="periodo" type="number" max="10" min="4" value="{{curso.periodo}}">
+            </div>
+            <div class="w3-section">
+            <label>Categoria: </label><br>
+            {% if curso.semestral == "Integrado" %}
+                <label class="radio-inline">
+                    <input type="radio" name="semestral" id="inlineRadio1" value="Integrado" checked>Integrado
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="semestral" id="inlineRadio2" value="Subsequente">Subsequente
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="semestral" id="inlineRadio2" value="Superior">Superior
+                </label>
+            {% elif curso.semestral == "Superior" %}
+                <label class="radio-inline">
+                    <input type="radio" name="semestral" id="inlineRadio1" value="Integrado">Integrado
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="semestral" id="inlineRadio2" value="Subsequente">Subsequente
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="semestral" id="inlineRadio2" value="Superior" checked>Superior
+                </label>   
+            {% else %}
+                <label class="radio-inline">
+                    <input type="radio" name="semestral" id="inlineRadio1" value="Integrado">Integrado
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="semestral" id="inlineRadio2" value="Subsequente" checked>Subsequente
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="semestral" id="inlineRadio2" value="Superior">Superior
+                </label>
+            {% endif %}
+            </div>
+            <button type="submit" class="w3-btn w3-green w3-right">Alterar</button>
+            <a href="/cursos" style="text-decoration:none" class="w3-btn w3-green w3-right w3-margin-right"> Cancelar </span></a>
+        </fieldset>
+    </form><br>
+  </div>
+</div>
+
+{% endblock %}

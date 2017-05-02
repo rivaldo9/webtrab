@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class=w3-container>
+    <h1>Disciplinas</h1>
+    <br>
+</div>
+
+<div class="w3-container">
+  <table class="w3-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Periodo</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for disciplina in disciplinas %}
+            <tr>
+              <td>{{disciplina.nome}}</td>
+              <td>{{disciplina.periodo}}</td>
+          </tr>
+          
+        {% endfor %}
+      </tbody>
+  </table>
+</div>
+
+
+{% endblock %}

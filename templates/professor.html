@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="w3-container">
+
+    <h1>Professor</h1>
+    <!-- Butão que abre o modal para adicionar curso -->
+    <button class="w3-btn w3-green w3-right" data-toggle="modal" data-target="#myModal">Adicionar Professor</button><br><br><br>
+    <!-- Modal com o form para adicionar curso -->
+    <div class="modal fade center" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Adicionar Professor</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/professor" enctype="multipart/form-data" method="post">
+                        <fieldset>
+                            <div><label>Nome</label></div>
+                            <div><input type="text" name="nome" class="w3-input w3-border" required="nome" autofocus/></div><br>
+                            <div><label>Área</label></div>
+                            <div><input type="text" name="area" class="w3-input w3-border" required="área"/></div><br>
+                            <div><label>Perfil</label></div>
+                            <div><input type="text" name="perfil" class="w3-input w3-border"/></div><br>
+                            <div><label>Email</label></div>
+                            <div><input type="text" name="email" class="w3-input w3-border" required="email"/></div><br>
+                            <div><label>Foto</label></div>
+                            <div><input type="file" name="img" value="images/avatar.png"/></div><br>
+                            <!--Botão de ação do modal Redefinir e ADICIONAR-->
+                            <div class="modal-footer">
+                                <button type="reset" class="w3-btn w3-green">Redefinir</button>
+                                <button type="submit" class="w3-btn w3-green">Adicionar</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="w3-table">
+        <thead>
+            <tr>
+                <th>Foto</th>
+                <th>Nome</th>
+                <th>Área</th>
+                <th>Perfil</th>
+                <th>Email</th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for professor in professores %}
+                <tr>
+                    <td width="80px" class="w3-center"><img id="myImg" class="img-circle" width="45px" height="45px" src="/img?img_id={{professor.key.urlsafe()}}"></img></td>
+                    <td>{{professor.nome}}</td>
+                    <td>{{professor.area}}</td>
+                    <td>{{professor.perfil}}</td>
+                    <td>{{professor.email}}</td>
+                    <td class="w3-center">
+                        <a href="/update?key={{professor.key.urlsafe()}};page=professor"><button class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></button></a>
+                        <a href="/delete?id={{professor.key.urlsafe()}};page=professor"><button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- The Modal -->
+<div id="myModalImg">
+  <span onclick="document.getElementById('myModalImg').style.display='none'" 
+      class="w3-button w3-display-topright">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+<script>
+// Get the modal
+var modal = document.getElementById('myModalImg');
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementById('myImg');
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+    modal.style.display = "none";
+}
+</script>
+
+{% endblock %}
